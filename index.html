@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Unit 1</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&family=Fira+Code:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      display: flex;
+      height: 58px;
+      box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .bnav-btn {
+      flex: 1;
+      border: none;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.2s;
+      opacity: 0.55;
+    }
+
+    .bnav-btn.active {
+      opacity: 1;
+    }
+
+    .bnav-btn span.icon {
+      font-size: 18px;
+    }
+
+    #nav-p1 {
+      background: #0a0e1a;
+      color: #00b4d8;
+    }
+
+    #nav-p2 {
+      background: #020d08;
+      color: #00ff88;
+    }
+
+    #nav-p3 {
+      background: #12001f;
+      color: #c084fc;
+    }
+
+    #nav-p1.active {
+      background: #0d1830;
+    }
+
+    #nav-p2.active {
+      background: #041910;
+    }
+
+    #nav-p3.active {
+      background: #1a0030;
+    }
+
+    /* PAGE 1 */
+    #page1 {
+      background: #080c14;
+      color: #e2e8f0;
+      padding-bottom: 80px;
+    }
+
+    #page1::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 180, 216, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 180, 216, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .p1-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 48px 20px 32px;
+      background: linear-gradient(180deg, rgba(0, 119, 182, 0.12) 0%, transparent 100%);
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .p1-badge {
+      display: inline-block;
+      background: rgba(0, 180, 216, 0.1);
+      border: 1px solid #00b4d8;
+      color: #00b4d8;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .p1-hero h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(20px, 5vw, 38px);
+      color: #fff;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+      text-shadow: 0 0 40px rgba(0, 180, 216, 0.4);
+    }
+
+    .p1-hero h1 em {
+      color: #00b4d8;
+      font-style: normal;
+    }
+
+    .p1-hero p {
+      font-family: 'Cairo', sans-serif;
+      color: #94a3b8;
+      font-size: 15px;
+      direction: rtl;
+    }
+
+    .p1-main {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .p1-card {
+      background: #0f1a2e;
+      border: 1px solid #1e3a5f;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0, 180, 216, 0.06);
+    }
+
+    .p1-card-hd {
+      background: linear-gradient(135deg, #13202f 0%, rgba(0, 119, 182, 0.15) 100%);
+      border-bottom: 1px solid #1e3a5f;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .p1-card-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .p1-card-titles {
+      flex: 1;
+    }
+
+    .p1-card-ten {
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+      color: #00b4d8;
+      font-weight: 700;
+    }
+
+    .p1-card-tar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 12px;
+      color: #94a3b8;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .p1-card-body {
+      padding: 20px;
+    }
+
+    .p1-en {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    .p1-ar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      color: #c8d8e8;
+      direction: rtl;
+      text-align: right;
+      background: rgba(0, 119, 182, 0.07);
+      border-right: 3px solid #0077b6;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    .p1-sub {
+      margin: 14px 0;
+      padding: 14px;
+      background: rgba(0, 180, 216, 0.04);
+      border: 1px solid rgba(0, 180, 216, 0.1);
+      border-radius: 10px;
+    }
+
+    .p1-sub-lbl {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #48cae4;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .p1-divider {
+      border: none;
+      border-top: 1px solid #1e3a5f;
+      margin: 16px 0;
+    }
+
+    .p1-gen-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .p1-gen-card {
+      background: rgba(0, 180, 216, 0.04);
+      border: 1px solid rgba(0, 180, 216, 0.12);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .p1-gen-era {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #f4a261;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .ctrls {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .btn-play {
+      background: rgba(0, 180, 216, 0.1);
+      border: 1px solid #0077b6;
+      color: #00b4d8;
+      padding: 6px 13px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .btn-play:hover {
+      background: rgba(0, 180, 216, 0.22);
+    }
+
+    .btn-play.speaking {
+      background: rgba(0, 180, 216, 0.3);
+      border-color: #00b4d8;
+      animation: pulse-blue 1s infinite;
+    }
+
+    .btn-stop-p1 {
+      background: rgba(239, 71, 111, 0.08);
+      border: 1px solid rgba(239, 71, 111, 0.3);
+      color: #ef476f;
+      padding: 6px 13px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .btn-stop-p1:hover {
+      background: rgba(239, 71, 111, 0.18);
+    }
+
+    @keyframes pulse-blue {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(0, 180, 216, 0);
+      }
+    }
+
+    /* PAGE 2 */
+    #page2 {
+      background: #020d08;
+      color: #d4ffe8;
+      font-family: 'Fira Code', monospace;
+      padding-bottom: 80px;
+    }
+
+    #page2::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 30% at 50% 0%, rgba(0, 255, 136, 0.06) 0%, transparent 70%), repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0, 255, 136, 0.025) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0, 255, 136, 0.025) 40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .p2-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 44px 20px 28px;
+      border-bottom: 1px solid #0d4a22;
+    }
+
+    .p2-badge {
+      display: inline-block;
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      padding: 4px 16px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    }
+
+    .p2-hero h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(18px, 5vw, 34px);
+      color: #00ff88;
+      text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+      margin-bottom: 5px;
+      font-weight: 900;
+    }
+
+    .p2-hero p {
+      font-family: 'Cairo', sans-serif;
+      color: #7abf94;
+      font-size: 14px;
+      direction: rtl;
+    }
+
+    .p2-main {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .p2-card {
+      background: #061f12;
+      border: 1px solid #0d4a22;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .p2-card:hover {
+      border-color: #00cc66;
+    }
+
+    .p2-card.answered {
+      border-color: rgba(0, 255, 136, 0.35);
+    }
+
+    .p2-q-block {
+      padding: 16px 18px;
+      background: rgba(0, 255, 136, 0.025);
+      border-bottom: 1px solid #0d4a22;
+    }
+
+    .p2-qnum {
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .p2-q-en {
+      font-family: 'Fira Code', monospace;
+      font-size: 13.5px;
+      color: #d4ffe8;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    .p2-q-ar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 12px;
+      color: #b8f0d0;
+      direction: rtl;
+      text-align: right;
+      background: rgba(0, 255, 136, 0.04);
+      border-right: 2px solid #00cc66;
+      padding: 6px 10px;
+      border-radius: 0 5px 5px 0;
+    }
+
+    .p2-ctrls {
+      padding: 8px 18px;
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid #0d4a22;
+    }
+
+    .btn-reveal {
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid #00cc66;
+      color: #00ff88;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+      letter-spacing: 1px;
+    }
+
+    .btn-reveal:hover {
+      background: rgba(0, 255, 136, 0.18);
+    }
+
+    .btn-sq {
+      background: rgba(0, 204, 255, 0.08);
+      border: 1px solid rgba(0, 204, 255, 0.3);
+      color: #00ccff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-sq:hover {
+      background: rgba(0, 204, 255, 0.18);
+    }
+
+    .btn-sq.speaking {
+      animation: glow-c 1s infinite;
+    }
+
+    .btn-sa {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #ffd700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-sa:hover {
+      background: rgba(255, 215, 0, 0.18);
+    }
+
+    .btn-sa.speaking {
+      animation: glow-g 1s infinite;
+    }
+
+    .btn-stop-p2 {
+      background: rgba(255, 68, 102, 0.08);
+      border: 1px solid rgba(255, 68, 102, 0.3);
+      color: #ff4466;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-stop-p2:hover {
+      background: rgba(255, 68, 102, 0.18);
+    }
+
+    @keyframes glow-c {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(0, 204, 255, 0);
+      }
+    }
+
+    @keyframes glow-g {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(255, 215, 0, 0);
+      }
+    }
+
+    .p2-ans-block {
+      display: none;
+      padding: 14px 18px;
+      background: rgba(0, 255, 136, 0.02);
+      animation: slideD 0.25s ease;
+    }
+
+    .p2-ans-block.visible {
+      display: block;
+    }
+
+    @keyframes slideD {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .p2-ans-lbl {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: #00ff88;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .p2-ans-lbl::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #0d4a22;
+    }
+
+    .p2-ans-en {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: #d4ffe8;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    .p2-ans-ar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 12px;
+      color: #b8f0d0;
+      direction: rtl;
+      text-align: right;
+      background: rgba(0, 255, 136, 0.05);
+      border-right: 2px solid #00ff88;
+      padding: 8px 12px;
+      border-radius: 0 5px 5px 0;
+      line-height: 1.9;
+    }
+
+    /* PAGE 3 */
+    #page3 {
+      background: #0a0015;
+      color: #f0e6ff;
+      font-family: 'JetBrains Mono', monospace;
+      padding-bottom: 80px;
+    }
+
+    #page3::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 35% at 50% 0%, rgba(192, 132, 252, 0.08) 0%, transparent 70%), repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(192, 132, 252, 0.015) 28px, rgba(192, 132, 252, 0.015) 29px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .p3-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 44px 20px 28px;
+      border-bottom: 1px solid #2d1060;
+      background: linear-gradient(180deg, rgba(192, 132, 252, 0.08) 0%, transparent 100%);
+    }
+
+    .p3-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #c084fc;
+      border: 1px solid #c084fc;
+      padding: 4px 16px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 12px rgba(192, 132, 252, 0.2);
+    }
+
+    .p3-hero h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(18px, 5vw, 34px);
+      color: #e9d5ff;
+      margin-bottom: 5px;
+      text-shadow: 0 0 30px rgba(192, 132, 252, 0.4);
+    }
+
+    .p3-hero h1 em {
+      color: #c084fc;
+      font-style: normal;
+    }
+
+    .p3-hero p {
+      font-family: 'Cairo', sans-serif;
+      color: #9d7abf;
+      font-size: 14px;
+      direction: rtl;
+    }
+
+    .p3-tabs {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      max-width: 820px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+    }
+
+    .p3-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 2px solid #2d1060;
+      color: #6b4a8f;
+      transition: all 0.2s;
+    }
+
+    .p3-tab.active {
+      border-bottom-color: #c084fc;
+      color: #c084fc;
+    }
+
+    .p3-main {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .p3-search-bar {
+      margin-bottom: 16px;
+    }
+
+    .p3-search-bar input {
+      width: 100%;
+      background: rgba(192, 132, 252, 0.06);
+      border: 1px solid #2d1060;
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: #f0e6ff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .p3-search-bar input:focus {
+      border-color: #c084fc;
+    }
+
+    .p3-search-bar input::placeholder {
+      color: #4a306a;
+    }
+
+    .p3-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .vocab-card {
+      background: rgba(192, 132, 252, 0.05);
+      border: 1px solid #2d1060;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .vocab-card:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      background: rgba(192, 132, 252, 0.08);
+    }
+
+    .vocab-en-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .vocab-en {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #e9d5ff;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .vocab-cat {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #6b4a8f;
+      text-transform: uppercase;
+      background: rgba(192, 132, 252, 0.08);
+      border: 1px solid #2d1060;
+      padding: 2px 7px;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .vocab-cat.tech {
+      color: #c084fc;
+      border-color: rgba(192, 132, 252, 0.3);
+    }
+
+    .vocab-cat.word {
+      color: #67e8f9;
+      border-color: rgba(103, 232, 249, 0.3);
+    }
+
+    .vocab-ar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 13px;
+      color: #c4a8e8;
+      direction: rtl;
+      text-align: right;
+      background: rgba(192, 132, 252, 0.04);
+      border-right: 2px solid #6b3fa0;
+      padding: 6px 10px;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.8;
+    }
+
+    .btn-vocab-play {
+      background: rgba(192, 132, 252, 0.1);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      color: #c084fc;
+      padding: 6px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-vocab-play:hover {
+      background: rgba(192, 132, 252, 0.2);
+    }
+
+    .btn-vocab-play.speaking {
+      background: rgba(192, 132, 252, 0.3);
+      animation: pulse-p 0.8s infinite;
+    }
+
+    @keyframes pulse-p {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(192, 132, 252, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(192, 132, 252, 0);
+      }
+    }
+
+    .no-results {
+      text-align: center;
+      color: #4a306a;
+      padding: 40px;
+      font-size: 13px;
+    }
+
+    /* توقيع بسيط */
+    .signature {
+      position: fixed;
+      bottom: 65px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      color: #00e5ff;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: monospace;
+      z-index: 9998;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="bottom-nav">
+    <button class="bnav-btn active" id="nav-p1" onclick="showPage(1)"><span
+        class="icon">🏛️</span><span>CONTENT</span></button>
+    <button class="bnav-btn" id="nav-p2" onclick="showPage(2)"><span class="icon">❓</span><span>Q &amp;
+        A</span></button>
+    <button class="bnav-btn" id="nav-p3" onclick="showPage(3)"><span class="icon">📖</span><span>VOCAB</span></button>
+  </nav>
+
+  <div class="signature">© Abdalla Elnour </div>
+
+  <!-- PAGE 1 - FULL CONTENT -->
+  <div class="page active" id="page1">
+    <div class="p1-hero">
+      <div class="p1-badge">"بِسْمِ اللَّهُ الرَّحْمَنِ الرَّحِيمِ"</div>
+      <h1><em>Computer</em> Architecture</h1>
+      <p>هندسة الحاسب</p>
+    </div>
+    <div class="p1-main">
+      <div class="p1-card">
+        <div class="p1-card-hd"><span class="p1-card-icon">🏛️</span>
+          <div class="p1-card-titles">
+            <div class="p1-card-ten">I. Introduction to Computer Architecture</div>
+            <div class="p1-card-tar">مقدمة في هندسة الحاسب</div>
+          </div>
+        </div>
+        <div class="p1-card-body">
+          <div class="ctrls"><button class="btn-play" onclick="speak('p1t1',this)">▶ Play</button><button
+              class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+          <div class="p1-en" id="p1t1">Computer Architecture is the blueprint for how a system's hardware components are
+            organized and interact.</div>
+          <div class="p1-ar">هندسة الحاسب هي المخطط الأساسي لكيفية تنظيم مكونات أجهزة النظام وتفاعلها.</div>
+          <div class="ctrls"><button class="btn-play" onclick="speak('p1t2',this)">▶ Play</button><button
+              class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+          <div class="p1-en" id="p1t2">It acts as a bridge between software and physical hardware devices.</div>
+          <div class="p1-ar">تعمل بمثابة جسر يربط بين البرمجيات وأجهزة المكونات المادية.</div>
+          <hr class="p1-divider">
+          <p style="font-size:11px;color:#48cae4;letter-spacing:2px;margin-bottom:12px;font-weight:700;">THE THREE MAIN
+            ASPECTS:</p>
+          <p
+            style="font-family:'Cairo',sans-serif;font-size:12px;color:#94a3b8;direction:rtl;text-align:right;margin-bottom:14px;">
+            الجوانب الثلاثة الرئيسية لهندسة الحاسب:</p>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">01 — Instruction Set Architecture (ISA)</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t3',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t3">Instruction Set Architecture (ISA) defines the interface between hardware and
+              software, including machine instructions, data types, and registers. It determines what operations the
+              processor can perform.</div>
+            <div class="p1-ar">هندسة طقم التعليمات (ISA): تحدد الواجهة بين الأجهزة والبرامج، بما في ذلك تعليمات الآلة،
+              أنواع البيانات، والسجلات. وهي التي تحدد العمليات التي يمكن للمعالج القيام بها.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">02 — Microarchitecture</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t4',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t4">Microarchitecture describes how the CPU executes instructions using components
+              such as the ALU, Control Unit, pipelines, and caches. It refers to the internal implementation of the
+              processor.</div>
+            <div class="p1-ar">البنية الدقيقة: تصف كيف يقوم المعالج بتنفيذ التعليمات باستخدام مكونات مثل وحدة الحساب
+              والمنطق، وحدة التحكم، الأنابيب، والذاكرة المخبئية.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">03 — System Design</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t5',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t5">System Design involves the overall structure of the computer system, including
+              memory hierarchy, I/O systems, buses, and integration of hardware components.</div>
+            <div class="p1-ar">تصميم النظام: يتضمن الهيكل العام لنظام الحاسوب، بما في ذلك هرمية الذاكرة، أنظمة الإدخال
+              والإخراج، الناقلات، وتكامل مكونات الأجهزة.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p1-card">
+        <div class="p1-card-hd"><span class="p1-card-icon">⚙️</span>
+          <div class="p1-card-titles">
+            <div class="p1-card-ten">II. CPU Components and Functions</div>
+            <div class="p1-card-tar">مكونات ووظائف المعالج</div>
+          </div>
+        </div>
+        <div class="p1-card-body">
+          <div class="ctrls"><button class="btn-play" onclick="speak('p1t6',this)">▶ Play</button><button
+              class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+          <div class="p1-en" id="p1t6">The CPU is the core of the system where all logical and arithmetic processing
+            occurs.</div>
+          <div class="p1-ar">وحدة المعالجة المركزية (CPU) هي قلب النظام حيث تحدث جميع عمليات المعالجة المنطقية
+            والحسابية.</div>
+          <hr class="p1-divider">
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">ALU — Arithmetic Logic Unit</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t7',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t7">Arithmetic Logic Unit (ALU) performs operations like addition, subtraction, and
+              logical comparisons.</div>
+            <div class="p1-ar">وحدة الحساب والمنطق (ALU): تنفذ العمليات مثل الجمع، الطرح، والمقارنات المنطقية.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">CU — Control Unit</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t8',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t8">Control Unit (CU) acts as the orchestrator, interpreting instructions and
+              coordinating all system activities.</div>
+            <div class="p1-ar">وحدة التحكم (CU): تعمل كمنظم، حيث تفسر التعليمات وتنسق جميع أنشطة النظام.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Registers</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t9',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t9">Registers are high-speed storage locations within the CPU used to hold data and
+              instructions temporarily.</div>
+            <div class="p1-ar">السجلات: مواقع تخزين فائقة السرعة داخل المعالج تستخدم لحفظ البيانات والتعليمات مؤقتاً.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p1-card">
+        <div class="p1-card-hd"><span class="p1-card-icon">🔌</span>
+          <div class="p1-card-titles">
+            <div class="p1-card-ten">III. The System Bus</div>
+            <div class="p1-card-tar">ناقل النظام</div>
+          </div>
+        </div>
+        <div class="p1-card-body">
+          <div class="ctrls"><button class="btn-play" onclick="speak('p1t10',this)">▶ Play</button><button
+              class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+          <div class="p1-en" id="p1t10">The System Bus is the information highway that interconnects all components for
+            data exchange.</div>
+          <div class="p1-ar">ناقل النظام هو الطريق السريع للمعلومات الذي يربط جميع المكونات ببعضها لتبادل البيانات.
+          </div>
+          <hr class="p1-divider">
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Data Bus — ناقل البيانات</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t11',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t11">Data Bus transfers the actual data between the CPU and memory.</div>
+            <div class="p1-ar">ناقل البيانات: ينقل البيانات الفعلية بين المعالج والذاكرة.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Address Bus — ناقل العناوين</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t12',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t12">Address Bus carries memory addresses to identify specific storage locations.
+            </div>
+            <div class="p1-ar">ناقل العناوين: يحمل عناوين الذاكرة لتحديد مواقع تخزين معينة.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Control Bus — ناقل التحكم</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t13',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t13">Control Bus transmits signals to manage timing and coordinate system
+              operations.</div>
+            <div class="p1-ar">ناقل التحكم: يرسل الإشارات لإدارة التوقيت وتنسيق عمليات النظام.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p1-card">
+        <div class="p1-card-hd"><span class="p1-card-icon">🔄</span>
+          <div class="p1-card-titles">
+            <div class="p1-card-ten">IV. Instruction Cycle &amp; Architectures</div>
+            <div class="p1-card-tar">دورة التعليمات والأنظمة</div>
+          </div>
+        </div>
+        <div class="p1-card-body">
+          <p style="font-size:11px;color:#48cae4;letter-spacing:2px;margin-bottom:12px;font-weight:700;">THE INSTRUCTION
+            CYCLE (FETCH-EXECUTE):</p>
+          <p
+            style="font-family:'Cairo',sans-serif;font-size:12px;color:#94a3b8;direction:rtl;text-align:right;margin-bottom:14px;">
+            دورة التعليمات (جلب - تنفيذ):</p>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Phase 1 — Fetch / الجلب</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t14',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t14">Fetch Phase: The Control Unit retrieves the next instruction from memory using
+              the Program Counter.</div>
+            <div class="p1-ar">مرحلة الجلب: تستعيد وحدة التحكم التعليمية التالية من الذاكرة باستخدام عداد البرنامج.
+            </div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Phase 2 — Decode / فك التشفير</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t15',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t15">Decode Phase: The fetched instruction is interpreted to determine what
+              operation to perform.</div>
+            <div class="p1-ar">مرحلة فك التشفير: يتم تفسير التعليمية المجلوبة لتحديد العملية المطلوب تنفيذها.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Phase 3 — Execute / التنفيذ</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t16',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t16">Execute Phase: The instruction is performed by the appropriate unit like the
+              ALU.</div>
+            <div class="p1-ar">مرحلة التنفيذ: يتم تنفيذ التعليمية بواسطة الوحدة المناسبة مثل وحدة الحساب والمنطق.</div>
+          </div>
+          <div class="p1-sub">
+            <div class="p1-sub-lbl">Phase 4 — Store / التخزين</div>
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t17',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t17">Store Phase: The final result is saved back into memory or registers.</div>
+            <div class="p1-ar">مرحلة التخزين: يتم حفظ النتيجة النهائية مرة أخرى في الذاكرة أو السجلات.</div>
+          </div>
+          <hr class="p1-divider">
+          <p style="font-size:11px;color:#48cae4;letter-spacing:2px;margin-bottom:12px;font-weight:700;">VON NEUMANN VS.
+            HARVARD:</p>
+          <p
+            style="font-family:'Cairo',sans-serif;font-size:12px;color:#94a3b8;direction:rtl;text-align:right;margin-bottom:14px;">
+            بنية فون نيومان مقابل بنية هارفارد:</p>
+          <div class="p1-sub">
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t18',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t18">Von Neumann uses unified memory for data and instructions, while Harvard uses
+              dual separate memories.</div>
+            <div class="p1-ar">يستخدم فون نيومان ذاكرة موحدة للبيانات والتعليمات، بينما يستخدم هارفارد ذاكرتين منفصلتين.
+            </div>
+          </div>
+          <div class="p1-sub">
+            <div class="ctrls"><button class="btn-play" onclick="speak('p1t19',this)">▶ Play</button><button
+                class="btn-stop-p1" onclick="stopAll()">■ Stop</button></div>
+            <div class="p1-en" id="p1t19">Harvard is faster due to parallel processing, but Von Neumann is simpler for
+              general use.</div>
+            <div class="p1-ar">هارفارد أسرع بسبب المعالجة المتوازية، لكن فون نيومان أبسط للاستخدام العام.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p1-card">
+        <div class="p1-card-hd"><span class="p1-card-icon">🕰️</span>
+          <div class="p1-card-titles">
+            <div class="p1-card-ten">V. Computer Generations</div>
+            <div class="p1-card-tar">أجيال الحاسوب</div>
+          </div>
+        </div>
+        <div class="p1-card-body">
+          <div class="p1-gen-grid">
+            <div class="p1-gen-card">
+              <div class="p1-gen-era">1940–1956 — First Generation</div>
+              <div class="ctrls"><button class="btn-play" onclick="speak('p1g1',this)"
+                  style="padding:5px 10px;font-size:10px;">▶</button><button class="btn-stop-p1" onclick="stopAll()"
+                  style="padding:5px 10px;font-size:10px;">■</button></div>
+              <div class="p1-en" id="p1g1" style="font-size:12px;">First Generation relied on Vacuum Tubes, which were
+                bulky and inefficient.</div>
+              <div class="p1-ar" style="font-size:12px;">الجيل الأول: اعتمد على الأنابيب المفرغة، التي كانت ضخمة وغير
+                فعالة.</div>
+            </div>
+            <div class="p1-gen-card">
+              <div class="p1-gen-era">1956–1963 — Second Generation</div>
+              <div class="ctrls"><button class="btn-play" onclick="speak('p1g2',this)"
+                  style="padding:5px 10px;font-size:10px;">▶</button><button class="btn-stop-p1" onclick="stopAll()"
+                  style="padding:5px 10px;font-size:10px;">■</button></div>
+              <div class="p1-en" id="p1g2" style="font-size:12px;">Second Generation introduced Transistors, which were
+                smaller, faster, and more reliable.</div>
+              <div class="p1-ar" style="font-size:12px;">الجيل الثاني: قدم الترانزستورات، التي كانت أصغر وأسرع وأكثر
+                موثوقية.</div>
+            </div>
+            <div class="p1-gen-card">
+              <div class="p1-gen-era">1964–1971 — Third Generation</div>
+              <div class="ctrls"><button class="btn-play" onclick="speak('p1g3',this)"
+                  style="padding:5px 10px;font-size:10px;">▶</button><button class="btn-stop-p1" onclick="stopAll()"
+                  style="padding:5px 10px;font-size:10px;">■</button></div>
+              <div class="p1-en" id="p1g3" style="font-size:12px;">Third Generation used Integrated Circuits (ICs) to
+                combine multiple transistors on one chip.</div>
+              <div class="p1-ar" style="font-size:12px;">الجيل الثالث: استخدم الدوائر المتكاملة لدمج ترانزستورات متعددة
+                على شريحة واحدة.</div>
+            </div>
+            <div class="p1-gen-card">
+              <div class="p1-gen-era">1971–Present — Fourth Generation</div>
+              <div class="ctrls"><button class="btn-play" onclick="speak('p1g4',this)"
+                  style="padding:5px 10px;font-size:10px;">▶</button><button class="btn-stop-p1" onclick="stopAll()"
+                  style="padding:5px 10px;font-size:10px;">■</button></div>
+              <div class="p1-en" id="p1g4" style="font-size:12px;">Fourth Generation developed Microprocessors using
+                VLSI technology.</div>
+              <div class="p1-ar" style="font-size:12px;">الجيل الرابع: طور المعالجات الدقيقة باستخدام تقنية VLSI.</div>
+            </div>
+            <div class="p1-gen-card">
+              <div class="p1-gen-era">Future — Fifth Generation</div>
+              <div class="ctrls"><button class="btn-play" onclick="speak('p1g5',this)"
+                  style="padding:5px 10px;font-size:10px;">▶</button><button class="btn-stop-p1" onclick="stopAll()"
+                  style="padding:5px 10px;font-size:10px;">■</button></div>
+              <div class="p1-en" id="p1g5" style="font-size:12px;">Fifth Generation focuses on Artificial Intelligence
+                (AI) and parallel processing.</div>
+              <div class="p1-ar" style="font-size:12px;">الجيل الخامس: يركز على الذكاء الاصطناعي والمعالجة المتوازية.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page2">
+    <div class="p2-hero">
+      <div class="p2-badge">❓ Q &amp; A MODULE</div>
+      <h1>QUESTIONS &amp; ANSWERS</h1>
+      <p>أسئلة وأجوبة — هندسة الحاسوب</p>
+    </div>
+    <div class="p2-main" id="qa-container"></div>
+  </div>
+  <div class="page" id="page3">
+    <div class="p3-hero">
+      <div class="p3-badge">📖 VOCABULARY</div>
+      <h1><em>Word</em> List</h1>
+      <p>قائمة الكلمات والمصطلحات — مع النطق</p>
+    </div>
+    <div style="position:relative;z-index:1;max-width:820px;margin:0 auto;">
+      <div class="p3-tabs">
+        <div class="p3-tab active" onclick="switchVocabTab('all')">All</div>
+        <div class="p3-tab" onclick="switchVocabTab('tech')">Technical</div>
+        <div class="p3-tab" onclick="switchVocabTab('word')">Words</div>
+      </div>
+    </div>
+    <div class="p3-main">
+      <div class="p3-search-bar"><input type="text" id="vocab-search" placeholder="🔍 Search in English or Arabic..."
+          oninput="filterVocab()"></div>
+      <div class="p3-grid" id="vocab-grid"></div>
+      <div class="no-results" id="vocab-no-results" style="display:none;">No results found</div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(n) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
+      document.getElementById('nav-p' + n).classList.add('active');
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    let activeSpeakBtn = null;
+    function stopAll() {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (activeSpeakBtn) { activeSpeakBtn.classList.remove('speaking'); activeSpeakBtn = null; }
+    }
+
+    // بدون أي تظليل – مجرد نطق
+    function speak(elId, btn) {
+      stopAll();
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const text = el.textContent;
+      activeSpeakBtn = btn;
+      btn.classList.add('speaking');
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-US';
+      utter.rate = 0.5;
+      utter.pitch = 1.0;
+      utter.onend = () => { btn.classList.remove('speaking'); activeSpeakBtn = null; };
+      utter.onerror = () => { btn.classList.remove('speaking'); activeSpeakBtn = null; };
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.speak(utter), 50);
+    }
+
+    function speakVocab(text, btn) {
+      stopAll();
+      activeSpeakBtn = btn;
+      btn.classList.add('speaking');
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-US';
+      utter.rate = 0.5
+      utter.onend = () => { btn.classList.remove('speaking'); activeSpeakBtn = null; };
+      utter.onerror = () => { btn.classList.remove('speaking'); activeSpeakBtn = null; };
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.speak(utter), 50);
+    }
+
+    // بيانات الأسئلة والأجوبة
+    const qaData = [
+      { num: 'Q1', qen: 'What does Computer Architecture refer to?', qar: 'إلى ماذا تشير عمارة الحاسوب؟', aen: 'It refers to the conceptual design, structure, and functional behavior of a computer system, including how hardware components are organized and interact.', aar: 'تشير إلى التصميم المفاهيمي والهيكل والسلوك الوظيفي لنظام الحاسوب، بما في ذلك كيفية تنظيم مكونات الأجهزة وتفاعلها.' },
+      { num: 'Q2', qen: 'What technology was used in the first generation of computers?', qar: 'ما هي التكنولوجيا التي استُخدمت في الجيل الأول من الحواسيب؟', aen: 'The first generation relied on vacuum tubes for processing and control, which acted as switches and amplifiers.', aar: 'اعتمد الجيل الأول على الصمامات المفرغة للمعالجة والتحكم، والتي كانت تعمل كمفاتيح ومضخمات.' },
+      { num: 'Q3', qen: 'What is the Stored-Program Concept in Von Neumann architecture?', qar: 'ما هو مفهوم البرنامج المخزن في معمارية فون نيومان؟', aen: 'It is the idea that both program instructions and data are stored within a single shared memory system.', aar: 'هي فكرة أن كلاً من تعليمات البرنامج والبيانات يتم تخزينها داخل نظام ذاكرة واحدة مشتركة.' },
+      { num: 'Q4', qen: 'What is the main limitation known as the Von Neumann Bottleneck?', qar: 'ما هو العيب الرئيسي المعروف باسم عنق زجاجة فون نيومان؟', aen: 'It is the limitation where the shared pathway known as the bus between the CPU and memory restricts the speed of data transfer.', aar: 'هو العائق المتمثل في أن المسار المشترك (الناقل) بين وحدة المعالجة المركزية والذاكرة يحد من سرعة نقل البيانات.' },
+      { num: 'Q5', qen: 'How does Harvard Architecture differ from Von Neumann regarding memory?', qar: 'كيف تختلف معمارية هارفارد عن فون نيومان فيما يتعلق بالذاكرة؟', aen: 'Harvard Architecture uses separate memory systems and buses for instructions and data, allowing simultaneous access.', aar: 'تستخدم معمارية هارفارد أنظمة ذاكرة وناقلات منفصلة للتعليمات والبيانات، مما يسمح بالوصول إليهما في وقت واحد.' },
+      { num: 'Q6', qen: 'What are the three main aspects of computer architecture?', qar: 'ما هي الجوانب الثلاثة الرئيسية لعمارة الحاسوب؟', aen: 'They are Instruction Set Architecture (ISA), Microarchitecture, and System Design.', aar: 'هي عمارة مجموعة التعليمات (ISA)، والمعمارية الدقيقة، وتصميم النظام.' },
+      { num: 'Q7', qen: 'What is the role of the Control Unit (CU) in a CPU?', qar: 'ما هو دور وحدة التحكم (CU) في وحدة المعالجة المركزية؟', aen: 'It acts as the orchestrator, interpreting instructions and issuing signals to coordinate operations across all components.', aar: 'تعمل كمنسق، حيث تفسر التعليمات وتصدر إشارات لتنسيق العمليات عبر جميع المكونات.' },
+      { num: 'Q8', qen: 'What is the primary focus of Reduced Instruction Set Computing (RISC)?', qar: 'ما هو التركيز الأساسي لحوسبة مجموعة التعليمات المختصرة (RISC)؟', aen: 'RISC emphasizes simplifying instructions for faster execution and better pipeline efficiency.', aar: 'يركز RISC على تبسيط التعليمات من أجل تنفيذ أسرع وكفاءة أفضل لخطوط المعالجة.' },
+      { num: 'Q9', qen: 'What are the four phases of the instruction cycle in Von Neumann architecture?', qar: 'ما هي المراحل الأربع لدورة التعليمات في معمارية فون نيومان؟', aen: 'The phases are Fetch, Decode, Execute, and Store.', aar: 'المراحل هي الجلب، وفك التشفير، والتنفيذ، والتخزين.' },
+      { num: 'Q10', qen: 'What is the purpose of Levels of Abstraction in computing?', qar: 'ما هو الغرض من مستويات التجريد في الحوسبة؟', aen: 'It simplifies system complexity by hiding lower-level implementation details while focusing on relevant functions at each layer.', aar: 'تبسط تعقيد النظام من خلال إخفاء تفاصيل التنفيذ في المستويات الأدنى مع التركيز على الوظائف ذات الصلة في كل طبقة.' }
+    ];
+
+    function buildQA() {
+      const cont = document.getElementById('qa-container');
+      qaData.forEach((q, i) => {
+        const qid = 'q2qe' + i, aid = 'q2ae' + i, bid = 'q2b' + i;
+        const card = document.createElement('div');
+        card.className = 'p2-card'; card.id = 'q2card' + i;
+        card.innerHTML = `<div class="p2-q-block"><div class="p2-qnum">${q.num}</div><div class="p2-q-en" id="${qid}">${q.qen}</div><div class="p2-q-ar">${q.qar}</div></div><div class="p2-ctrls"><button class="btn-reveal" id="${bid}" onclick="toggleAns(${i})">👁 Show Answer</button><button class="btn-sq" onclick="speak('${qid}',this)">▶ Q</button><button class="btn-sa" onclick="speak('${aid}',this)">▶ A</button><button class="btn-stop-p2" onclick="stopAll()">■</button></div><div class="p2-ans-block" id="ans${i}"><div class="p2-ans-lbl">ANSWER / الإجابة</div><div class="p2-ans-en" id="${aid}">${q.aen}</div><div class="p2-ans-ar">${q.aar}</div></div>`;
+        cont.appendChild(card);
+      });
+    }
+    function toggleAns(i) {
+      const block = document.getElementById('ans' + i);
+      const btn = document.getElementById('q2b' + i);
+      const card = document.getElementById('q2card' + i);
+      const vis = block.classList.toggle('visible');
+      btn.textContent = vis ? '🙈 Hide Answer' : '👁 Show Answer';
+      if (vis) card.classList.add('answered'); else card.classList.remove('answered');
+    }
+
+    const vocabData = [
+      { en: 'Computer Architecture', ar: 'هندسة الحاسب', cat: 'tech' }, { en: 'Instruction Set Architecture (ISA)', ar: 'هندسة طقم التعليمات', cat: 'tech' }, { en: 'Microarchitecture', ar: 'البنية الدقيقة', cat: 'tech' }, { en: 'System Design', ar: 'تصميم النظام', cat: 'tech' }, { en: 'CPU — Central Processing Unit', ar: 'وحدة المعالجة المركزية', cat: 'tech' }, { en: 'ALU — Arithmetic Logic Unit', ar: 'وحدة الحساب والمنطق', cat: 'tech' }, { en: 'Control Unit (CU)', ar: 'وحدة التحكم', cat: 'tech' }, { en: 'Registers', ar: 'السجلات', cat: 'tech' }, { en: 'System Bus', ar: 'ناقل النظام', cat: 'tech' }, { en: 'Data Bus', ar: 'ناقل البيانات', cat: 'tech' }, { en: 'Address Bus', ar: 'ناقل العناوين', cat: 'tech' }, { en: 'Control Bus', ar: 'ناقل التحكم', cat: 'tech' }, { en: 'Instruction Cycle', ar: 'دورة التعليمات', cat: 'tech' }, { en: 'Program Counter', ar: 'عداد البرنامج', cat: 'tech' }, { en: 'Von Neumann Architecture', ar: 'بنية فون نيومان', cat: 'tech' }, { en: 'Harvard Architecture', ar: 'بنية هارفارد', cat: 'tech' }, { en: 'Vacuum Tubes', ar: 'الأنابيب المفرغة', cat: 'tech' }, { en: 'Transistors', ar: 'الترانزستورات', cat: 'tech' }, { en: 'Integrated Circuits (ICs)', ar: 'الدوائر المتكاملة', cat: 'tech' }, { en: 'Microprocessors', ar: 'المعالجات الدقيقة', cat: 'tech' }, { en: 'VLSI Technology', ar: 'تقنية التكامل واسع النطاق', cat: 'tech' }, { en: 'Artificial Intelligence (AI)', ar: 'الذكاء الاصطناعي', cat: 'tech' }, { en: 'Blueprint', ar: 'مخطط أساسي', cat: 'word' }, { en: 'Bridge', ar: 'جسر / رابط', cat: 'word' }, { en: 'Aspects', ar: 'جوانب', cat: 'word' }, { en: 'Internal Implementation', ar: 'التنفيذ الداخلي', cat: 'word' }, { en: 'Memory Hierarchy', ar: 'هرمية الذاكرة', cat: 'word' }, { en: 'Integration', ar: 'تكامل / دمج', cat: 'word' }, { en: 'Arithmetic', ar: 'حسابي', cat: 'word' }, { en: 'Logical', ar: 'منطقي', cat: 'word' }, { en: 'Orchestrator', ar: 'منظم / منسق', cat: 'word' }, { en: 'Interconnects', ar: 'يربط بين', cat: 'word' }, { en: 'Fetch', ar: 'جلب / استعادة', cat: 'word' }, { en: 'Decode', ar: 'فك التشفير / تفسير', cat: 'word' }, { en: 'Execute', ar: 'تنفيذ', cat: 'word' }, { en: 'Unified', ar: 'موحد', cat: 'word' }, { en: 'Separate', ar: 'منفصل', cat: 'word' }, { en: 'Parallel Processing', ar: 'معالجة متوازية', cat: 'word' }, { en: 'Generations', ar: 'أجيال', cat: 'word' }, { en: 'Bulky', ar: 'ضخم الحجم', cat: 'word' }, { en: 'Inefficient', ar: 'غير فعال', cat: 'word' }, { en: 'Reliable', ar: 'موثوق', cat: 'word' }
+    ];
+    let currentVocabTab = 'all', currentSearch = '';
+    function renderVocab() {
+      const grid = document.getElementById('vocab-grid'), noR = document.getElementById('vocab-no-results');
+      const q = currentSearch.toLowerCase();
+      const filtered = vocabData.filter(v => (currentVocabTab === 'all' || v.cat === currentVocabTab) && (!q || v.en.toLowerCase().includes(q) || v.ar.includes(currentSearch)));
+      grid.innerHTML = '';
+      if (!filtered.length) { noR.style.display = 'block'; return; }
+      noR.style.display = 'none';
+      filtered.forEach(v => { const card = document.createElement('div'); card.className = 'vocab-card'; card.innerHTML = `<div class="vocab-en-row"><div class="vocab-en">${v.en}</div><span class="vocab-cat ${v.cat}">${v.cat === 'tech' ? 'Technical' : 'Word'}</span></div><div class="vocab-ar">${v.ar}</div><button class="btn-vocab-play" onclick="speakVocab('${v.en.replace(/'/g, "\\'")}', this)">▶ &nbsp; Play Pronunciation</button>`; grid.appendChild(card); });
+    }
+    function switchVocabTab(tab) { currentVocabTab = tab; document.querySelectorAll('.p3-tab').forEach((t, i) => { t.classList.toggle('active', ['all', 'tech', 'word'][i] === tab); }); renderVocab(); }
+    function filterVocab() { currentSearch = document.getElementById('vocab-search').value; renderVocab(); }
+
+    buildQA();
+    renderVocab();
+  </script>
+</body>
+
+</html>
